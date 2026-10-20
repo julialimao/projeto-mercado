@@ -1,12 +1,16 @@
 package br.com.senai.infob.backend.projeto_mercado.models;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +31,14 @@ public class Curso {
 
     @Column(name="dataFinalização", nullable=false)
     private LocalDate dataFinalização;
+
+    @ManyToMany
+    @JoinTable(
+        name = "curso_usuario",
+        joinColumns = @JoinColumn(name = "curso_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private List<Usuario> usuarios;
 
     public Curso() {
     }
@@ -77,6 +89,14 @@ public class Curso {
 
     public void setDataFinalização(LocalDate dataFinalização) {
         this.dataFinalização = dataFinalização;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }
 
